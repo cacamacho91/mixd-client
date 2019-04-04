@@ -1,6 +1,10 @@
 import React from 'react'
 import { Icon } from 'react-native-elements'
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation'
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+  createAppContainer
+} from 'react-navigation'
 import CocktailScreen from './src/components/Cocktails/CocktailScreen'
 import CocktailCreatorScreen from './src/components/CocktailCreator/CocktailCreatorScreen'
 import ProfileScreen from './src/components/Profile/ProfileScreen'
@@ -45,4 +49,10 @@ const TabNavigator = createBottomTabNavigator(
   }
 )
 
-export default createAppContainer(TabNavigator)
+const AppContainer = createAppContainer(TabNavigator)
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />
+  }
+}

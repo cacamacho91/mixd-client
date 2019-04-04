@@ -1,7 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import { ListItem } from 'react-native-elements'
-import { Icon } from 'react-native-elements'
+import { ListItem, Icon } from 'react-native-elements'
 
 const CocktailList = props => {
   return (
@@ -11,6 +10,7 @@ const CocktailList = props => {
 
         return (
           <ListItem
+            onPress={() => props.handleCocktailSelect(cocktail)}
             key={cocktail.id}
             leftAvatar={{
               source: {
