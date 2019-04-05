@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { SearchBar } from 'react-native-elements'
-import CocktailList from './CocktailList'
+import CocktailList from '../../CocktailList'
 import CocktailDetail from './CocktailDetail'
 import API from '../../adapters/API'
 
