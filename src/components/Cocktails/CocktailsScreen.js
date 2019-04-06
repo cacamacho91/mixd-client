@@ -4,6 +4,7 @@ import { Icon } from 'react-native-elements'
 import { SearchBar } from 'react-native-elements'
 import API from '../../adapters/API'
 import CocktailList from '../SharedCocktailComponents/CocktailList'
+import { normalizeString } from '../../lib/helper'
 
 class CocktailsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -36,6 +37,13 @@ class CocktailsScreen extends React.Component {
       cocktail: this.state.allCocktails.find(cocktail => cocktail.id === id)
     })
 
+  filteredAndSearchedCocktails = () =>
+    this.state.allCocktails.filter(cocktail =>
+      normalizeString(cocktail.name).includes(
+        normalizeString(this.state.searchTerm)
+      )
+    )
+
   render() {
     const { searchTerm, loaded, allCocktails } = this.state
 
@@ -51,7 +59,7 @@ class CocktailsScreen extends React.Component {
         {loaded ? (
           <CocktailList
             handleCocktailSelect={this.navigateToCocktail}
-            cocktails={allCocktails}
+            cocktails={this.filteredAndSearchedCocktails()}
           />
         ) : (
           <Text>Loading...</Text>

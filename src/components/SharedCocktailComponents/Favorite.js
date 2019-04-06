@@ -6,9 +6,9 @@ const Favorite = props => {
   const { outlineColor, active } = props
 
   return active ? (
-    <Icon name='heart-o' size={20} color={outlineColor} type='font-awesome' />
-  ) : (
     <Icon name='heart' size={23} color='red' type='font-awesome' />
+  ) : (
+    <Icon name='heart-o' size={20} color={outlineColor} type='font-awesome' />
   )
 }
 

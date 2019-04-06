@@ -16,7 +16,9 @@ class CocktailListItem extends React.Component {
       />
       <View style={styles.cocktailInfo}>
         <Text h4>{cocktail.name}</Text>
-        <Text>Vodka, Orange</Text>
+        <Text>
+          {cocktail.cocktail_ingredients.map(ci => ci.ingredient.name).join()}
+        </Text>
         <View style={styles.tasteRow}>
           {cocktail.tastes.map((taste, idx) => (
             <Taste {...taste} mini key={idx} />
@@ -25,10 +27,7 @@ class CocktailListItem extends React.Component {
       </View>
 
       <View>
-        <Favorite
-          outlineColor='gray'
-          active={Math.random() > 0.5 ? true : false}
-        />
+        <Favorite outlineColor='gray' />
       </View>
     </View>
   )

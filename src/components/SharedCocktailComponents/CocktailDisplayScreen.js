@@ -1,37 +1,35 @@
-import React, { Fragment } from 'react'
-import { View, Image, StyleSheet } from 'react-native'
-import { Text, Icon } from 'react-native-elements'
+import React from 'react'
+import { View, Image, StyleSheet, ScrollView } from 'react-native'
+import { Text } from 'react-native-elements'
 import Favorite from './Favorite'
 import Taste from './Taste'
 
 class CocktailDisplayScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerRight: (
-      <Favorite
-        outlineColor='white'
-        active={Math.random() > 0.5 ? true : false}
-      />
-    )
+    headerRight: <Favorite outlineColor='white' />
   })
 
   generateCocktailContent = cocktail => (
-    <View style={styles.cocktailContainer}>
-      <View style={styles.cocktailHeader}>
-        <Image
-          source={{
-            uri: 'https://via.placeholder.com/400'
-          }}
-          style={styles.cocktailImage}
-        />
-        <Text h3>{cocktail.name}</Text>
-        <Text>{cocktail.instructions}</Text>
-        <View style={styles.tasteRow}>
-          {cocktail.tastes.map((taste, idx) => (
-            <Taste {...taste} key={idx} />
-          ))}
+    <ScrollView>
+      <View style={styles.cocktailContainer}>
+        <View style={styles.cocktailHeader}>
+          <Image
+            source={{
+              uri: 'https://via.placeholder.com/400'
+            }}
+            style={styles.cocktailImage}
+          />
+          <Text h3>{cocktail.name}</Text>
+          <Text>{cocktail.instructions}</Text>
+          <View style={styles.tasteRow}>
+            {cocktail.tastes.map((taste, idx) => (
+              <Taste {...taste} key={idx} />
+            ))}
+          </View>
+          <Text>{cocktail.info}</Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   )
 
   generatePlaceholder = () => <Text> Loading... </Text>

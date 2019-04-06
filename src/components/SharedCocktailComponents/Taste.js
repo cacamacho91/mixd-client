@@ -1,8 +1,10 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
+import { getTasteColors } from '../../lib/helper'
 
 const Taste = props => {
-  const { mini, color_background, color_font, name } = props
+  const { mini, name } = props
+  const { backgroundColor, color } = getTasteColors(name)
 
   generateTaste = () => {
     if (mini) {
@@ -10,7 +12,7 @@ const Taste = props => {
         <View
           style={{
             ...styles.tasteMini,
-            backgroundColor: color_background
+            backgroundColor
           }}
         />
       )
@@ -19,11 +21,10 @@ const Taste = props => {
         <View
           style={{
             ...styles.tasteLarge,
-            backgroundColor: color_background,
-            color: color_font
+            backgroundColor
           }}
         >
-          <Text style={{ color: color_font, textAlign: 'center' }}>{name}</Text>
+          <Text style={{ color, textAlign: 'center' }}>{name}</Text>
         </View>
       )
     }
