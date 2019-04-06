@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, StyleSheet } from 'react-native'
 import CocktailListItem from './CocktailListItem'
 
 class CocktailList extends React.PureComponent {
@@ -10,6 +10,7 @@ class CocktailList extends React.PureComponent {
   render() {
     return (
       <FlatList
+        style={styles.cocktailListContainer}
         data={this.props.cocktails}
         keyExtractor={this.keyExtractor}
         renderItem={({ item }) => <CocktailListItem cocktail={item} />}
@@ -17,4 +18,11 @@ class CocktailList extends React.PureComponent {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  cocktailListContainer: {
+    marginBottom: 50
+  }
+})
+
 export default CocktailList

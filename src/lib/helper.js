@@ -1,4 +1,4 @@
-import { TASTE_COLORS } from '../../styles/common'
+import { TASTE_COLORS, LOADING_PHRASES } from '../../styles/common'
 
 // helper method to enable robust string compaisons
 const normalizeString = string => string.toLowerCase().trim()
@@ -12,4 +12,7 @@ const getTasteColors = tasteName => {
   return { name: tasteName, backgroundColor: '#666666', color: '#efefef' }
 }
 
-export { normalizeString, getTasteColors }
+const getLoadingPhrase = () =>
+  LOADING_PHRASES[Math.floor(Math.random() * LOADING_PHRASES.length)]
+
+export { normalizeString, getTasteColors, getLoadingPhrase }

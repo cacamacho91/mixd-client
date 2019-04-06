@@ -22,4 +22,10 @@ const TASTE_COLORS = [
   { name: 'Fruity', backgroundColor: '#a64d79', color: '#ecf8ff' }
 ]
 
-export { COLORS, TASTE_COLORS }
+const LOADING_PHRASES = [
+  'Mixing Drinks...',
+  'Slicing Limes...',
+  'Salting Rim...'
+]
+
+export { COLORS, TASTE_COLORS, LOADING_PHRASES }

@@ -1,10 +1,11 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import { Icon } from 'react-native-elements'
-import { SearchBar } from 'react-native-elements'
+import React, { Fragment } from 'react'
+import { View } from 'react-native'
+import { Icon, SearchBar } from 'react-native-elements'
 import API from '../../adapters/API'
 import CocktailList from '../SharedCocktailComponents/CocktailList'
 import { normalizeString } from '../../lib/helper'
+import Loading from '../../Loading'
+import CocktailListButton from './CocktailListButton'
 
 class CocktailsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -45,26 +46,29 @@ class CocktailsScreen extends React.Component {
     )
 
   render() {
-    const { searchTerm, loaded, allCocktails } = this.state
+    const { searchTerm, loaded } = this.state
 
     return (
-      <View>
-        <SearchBar
-          lightTheme
-          platform='android'
-          placeholder='Search...'
-          onChangeText={searchTerm => this.setState({ searchTerm })}
-          value={searchTerm}
-        />
-        {loaded ? (
-          <CocktailList
-            handleCocktailSelect={this.navigateToCocktail}
-            cocktails={this.filteredAndSearchedCocktails()}
+      <Fragment>
+        <View>
+          <SearchBar
+            lightTheme
+            platform='android'
+            placeholder='Search...'
+            onChangeText={searchTerm => this.setState({ searchTerm })}
+            value={searchTerm}
           />
-        ) : (
-          <Text>Loading...</Text>
-        )}
-      </View>
+          {loaded ? (
+            <CocktailList
+              handleCocktailSelect={this.navigateToCocktail}
+              cocktails={this.filteredAndSearchedCocktails()}
+            />
+          ) : (
+            <Loading />
+          )}
+          <CocktailListButton />
+        </View>
+      </Fragment>
     )
   }
 }
