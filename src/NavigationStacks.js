@@ -11,8 +11,7 @@ import FilterScreen from './components/Cocktails/FilterScreen'
 //Cocktail Creator Screens
 import CocktailCreatorScreen from './components/CocktailCreator/CocktailCreatorScreen'
 import CreatorHelpScreen from './components/CocktailCreator/CreatorHelpScreen'
-
-import { COLORS } from '../styles/common'
+import { COLORS } from '../style/theme.style'
 
 const globalDefaultNavigationOptions = {
   headerStyle: {

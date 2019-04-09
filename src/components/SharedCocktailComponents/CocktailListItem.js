@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { Text } from 'react-native-elements'
 import { withNavigation } from 'react-navigation'
+import { commonStyles as common } from '../../../style/common.style'
 import Favorite from './Favorite'
 import Taste from './Taste'
 
@@ -9,15 +10,15 @@ class CocktailListItem extends React.Component {
   generateCocktailContent = cocktail => (
     <View style={styles.cocktailContent}>
       <Image
-        source={{
-          uri: 'https://via.placeholder.com/80'
-        }}
+        source={require('./glass-assets/rock.png')}
         style={styles.cocktailImage}
       />
       <View style={styles.cocktailInfo}>
-        <Text h4>{cocktail.name}</Text>
-        <Text>
-          {cocktail.cocktail_ingredients.map(ci => ci.ingredient.name).join()}
+        <Text style={common.heading}>{cocktail.name}</Text>
+        <Text style={common.subText}>
+          {cocktail.cocktail_ingredients
+            .map(ci => ci.ingredient.name)
+            .join(', ')}
         </Text>
         <View style={styles.tasteRow}>
           {cocktail.tastes.map((taste, idx) => (
@@ -56,14 +57,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
     justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 0.5,
-    borderColor: '#d6d7da'
+    alignItems: 'center'
   },
   cocktailImage: {
     marginRight: 8,
-    height: 80,
-    width: 80
+    height: 40,
+    width: 40
   },
   cocktailInfo: {
     flexDirection: 'column',

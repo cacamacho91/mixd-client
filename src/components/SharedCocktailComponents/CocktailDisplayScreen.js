@@ -1,8 +1,11 @@
 import React from 'react'
-import { View, Image, StyleSheet, ScrollView } from 'react-native'
-import { Text } from 'react-native-elements'
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native'
+import { commonStyles as common } from '../../../style/common.style'
+// Do not use .index within /SharedCocktailComponents to aviod require cycles
 import Favorite from './Favorite'
 import Taste from './Taste'
+import GarnishList from './GarnishList'
+import CocktailGraphic from './CocktailGraphic'
 
 class CocktailDisplayScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -11,22 +14,30 @@ class CocktailDisplayScreen extends React.Component {
 
   generateCocktailContent = cocktail => (
     <ScrollView>
-      <View style={styles.cocktailContainer}>
-        <View style={styles.cocktailHeader}>
-          <Image
-            source={{
-              uri: 'https://via.placeholder.com/400'
-            }}
-            style={styles.cocktailImage}
+      <View style={common.cocktailContainer}>
+        <View style={common.cocktailGrapahicContainer}>
+          {cocktail.garnishes.length === 0 ? (
+            <Text style={common.regularText}> No Garnish Suggested</Text>
+          ) : (
+            <GarnishList garnishes={cocktail.garnishes} />
+          )}
+
+          <CocktailGraphic
+            height={300}
+            ingredients={cocktail.cocktail_ingredients}
+            glass='rock'
           />
-          <Text h3>{cocktail.name}</Text>
-          <Text>{cocktail.instructions}</Text>
-          <View style={styles.tasteRow}>
+        </View>
+
+        <View style={common.cocktailInfoContainer}>
+          <Text style={common.heading}>{cocktail.name}</Text>
+          <Text style={common.regularText}>{cocktail.instructions}</Text>
+          <View style={common.tasteRow}>
             {cocktail.tastes.map((taste, idx) => (
               <Taste {...taste} key={idx} />
             ))}
           </View>
-          <Text>{cocktail.info}</Text>
+          <Text style={common.regularText}>{cocktail.info}</Text>
         </View>
       </View>
     </ScrollView>
@@ -43,22 +54,5 @@ class CocktailDisplayScreen extends React.Component {
       : this.generatePlaceholder()
   }
 }
-
-const styles = StyleSheet.create({
-  cocktailContainer: {
-    flexDirection: 'column'
-  },
-  cocktailHeader: {
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  cocktailImage: {
-    width: '100%',
-    height: 400
-  },
-  tasteRow: {
-    flexDirection: 'row'
-  }
-})
 
 export default CocktailDisplayScreen

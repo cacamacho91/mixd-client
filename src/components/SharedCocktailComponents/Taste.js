@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { getTasteColors } from '../../lib/helper'
+import { TASTE_COLORS } from '../../../style/theme.style'
 
 const Taste = props => {
   const { mini, name } = props
-  const { backgroundColor, color } = getTasteColors(name)
+  const { backgroundColor, color } = TASTE_COLORS[name]
 
   generateTaste = () => {
     if (mini) {

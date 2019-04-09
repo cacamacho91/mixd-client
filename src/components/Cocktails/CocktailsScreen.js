@@ -66,7 +66,6 @@ class CocktailsScreen extends React.Component {
           ) : (
             <Loading />
           )}
-          <CocktailListButton />
         </View>
       </Fragment>
     )

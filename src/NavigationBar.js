@@ -6,7 +6,7 @@ import {
   CocktailStack,
   CocktailCreatorStack
 } from './NavigationStacks'
-import { COLORS } from '../styles/common'
+import { COLORS } from '../style/theme.style'
 
 const NavigationBar = createBottomTabNavigator(
   {
@@ -42,6 +42,10 @@ const NavigationBar = createBottomTabNavigator(
       }
     }),
     tabBarOptions: {
+      labelStyle: {
+        fontSize: 12,
+        fontFamily: 'roboto-light'
+      },
       activeTintColor: COLORS.PRIMARY,
       inactiveTintColor: 'gray'
     }
