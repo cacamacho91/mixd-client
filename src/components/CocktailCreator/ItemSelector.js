@@ -14,7 +14,6 @@ const ItemSelector = props => {
   return (
     <SectionedMultiSelect
       items={items}
-      hideSearch={hideSearch}
       searchPlaceholderText={`Search ${name}`}
       readOnlyHeadings={true}
       showDropDowns={false}

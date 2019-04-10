@@ -14,10 +14,21 @@ const getAllTastes = () => fetch(TASTE_URL).then(resp => resp.json())
 const getAllCocktailAttributes = () =>
   fetch(`${INGREDIENT_URL}/all-attributes`).then(resp => resp.json())
 
+const login = user => {
+  return fetch(BASE_URL + '/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+  }).then(resp => resp.json())
+}
+
 export default {
   getAllCocktails,
   getAllIngredients,
   getAllGarnishes,
   getAllTastes,
-  getAllCocktailAttributes
+  getAllCocktailAttributes,
+  login
 }

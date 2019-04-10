@@ -1,33 +1,13 @@
 import React from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  Button,
-  ScrollView,
-  ActivityIndicator
-} from 'react-native'
-import { Icon, Overlay } from 'react-native-elements'
+import { StyleSheet, View, ScrollView } from 'react-native'
+import { Icon } from 'react-native-elements'
 import { commonStyles as common } from '../../../style/common.style'
 import GarnishList from '../SharedCocktailComponents/GarnishList'
 import CocktailGraphic from '../SharedCocktailComponents/CocktailGraphic'
 import API from '../../adapters/API'
 import ItemSelector from './ItemSelector'
-import { TabView, SceneMap } from 'react-native-tab-view'
-import SectionedMultiSelect from 'react-native-sectioned-multi-select'
-
-// const InfoRoute = (
-//   <View style={[styles.scene, { backgroundColor: '#ff4081' }]}>
-//     <Text> I AM THE FIRST ROUTE BABY</Text>
-//   </View>
-// )
-
-// const ContentRoute = (
-//   <View style={[styles.scene, { backgroundColor: '#ff4081' }]}>
-//     <Text> I AM THE next ROUTE BABY</Text>
-//   </View>
-// )
+import Taste from '../SharedCocktailComponents/Taste'
+import PartPicker from './PartPicker'
 
 class CocktailCreatorScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -54,7 +34,8 @@ class CocktailCreatorScreen extends React.Component {
     },
     garnishIds: [],
     ingredientIds: [],
-    tasteIds: []
+    tasteIds: [],
+    cocktailIngredients: [] //used to store the parts
   }
   componentDidMount = () => {
     API.getAllGarnishes().then(allGarns => {
@@ -90,64 +71,102 @@ class CocktailCreatorScreen extends React.Component {
   }
 
   garnishSelectorChangeHandler = garnishIds => {
-    if (garnishIds.length > 9)
+    if (garnishIds.length > 9) {
       return alert(
         'A maximum of 9 garnishes can be used on a single cocktial (less is more)'
       )
+    }
     this.setState({ garnishIds })
   }
   ingredientSelectorChangeHandler = ingredientIds => {
-    this.setState({ ingredientIds })
+    if (ingredientIds.length > 10) {
+      return alert(
+        'We love ambition in an aspiring bar person but the limit is 10 ingredeints per cocktail!'
+      )
+    }
+    let ingObjs = []
+
+    ingredientIds.map(ingId =>
+      ingObjs.push({
+        parts: 1,
+        ingredient: this.state.lib.ingredientLib[0].children.find(
+          ing => ing.id === ingId
+        )
+      })
+    )
+
+    this.setState({ ingredientIds, cocktailIngredients: ingObjs })
   }
   tasteSelectorChangeHandler = tasteIds => {
+    if (tasteIds.length > 4) {
+      return alert('A maximum of 4 tastes can be used on a single cocktail')
+    }
     this.setState({ tasteIds })
   }
-  getGarnishObjects = () => {
-    return this.state.lib.garnishLib[0].children.filter(garnish =>
+  getGarnishObjects = () =>
+    this.state.lib.garnishLib[0].children.filter(garnish =>
       this.state.garnishIds.includes(garnish.id)
     )
-  }
+  getTasteObjects = () =>
+    this.state.lib.tasteLib[0].children.filter(taste =>
+      this.state.tasteIds.includes(taste.id)
+    )
+  getIngredientObjects = () =>
+    this.state.lib.ingredientLib[0].children.filter(ing =>
+      this.state.ingredientIds.includes(ing.id)
+    )
 
   render() {
     return (
-      <View style={common.cocktailContainer}>
-        <View style={common.cocktailGrapahicContainer}>
-          {/* {this.state.garnishIds.length !== 0 && this.getGarnishObjects()} */}
-          {this.state.garnishIds.length !== 0 && (
-            <GarnishList garnishes={this.getGarnishObjects()} />
-          )}
-          {/* <CocktailGraphic
+      <ScrollView>
+        <View style={common.cocktailContainer}>
+          <View style={common.cocktailGrapahicContainer}>
+            {this.state.garnishIds.length !== 0 && (
+              <GarnishList garnishes={this.getGarnishObjects()} />
+            )}
+            <CocktailGraphic
               height={150}
-              ingredients={cocktail_ingredients}
+              ingredients={this.state.cocktailIngredients}
               glass='rock'
-            /> */}
-          {this.state.lib.garnishesLoaded && (
-            <ItemSelector
-              name='Garnish'
-              items={this.state.lib.garnishLib}
-              onSelectedItemsChange={this.garnishSelectorChangeHandler}
-              selectedItems={this.state.garnishIds}
             />
-          )}
-          {this.state.lib.ingredientsLoaded && (
-            <ItemSelector
-              name='Ingredients'
-              items={this.state.lib.ingredientLib}
-              onSelectedItemsChange={this.ingredientSelectorChangeHandler}
-              selectedItems={this.state.ingredientIds}
-            />
-          )}
-          {this.state.lib.tastesLoaded && (
-            <ItemSelector
-              name='Tastes'
-              items={this.state.lib.tasteLib}
-              onSelectedItemsChange={this.tasteSelectorChangeHandler}
-              selectedItems={this.state.tasteIds}
-              hideSearch
-            />
-          )}
+            <View style={common.tasteRow}>
+              {this.state.tasteIds.length !== 0 &&
+                this.getTasteObjects().map((taste, idx) => (
+                  <Taste {...taste} key={idx} />
+                ))}
+            </View>
+            {this.state.lib.garnishesLoaded && (
+              <ItemSelector
+                name='Garnish'
+                items={this.state.lib.garnishLib}
+                onSelectedItemsChange={this.garnishSelectorChangeHandler}
+                selectedItems={this.state.garnishIds}
+              />
+            )}
+            {this.state.lib.tastesLoaded && (
+              <ItemSelector
+                name='Tastes'
+                items={this.state.lib.tasteLib}
+                onSelectedItemsChange={this.tasteSelectorChangeHandler}
+                selectedItems={this.state.tasteIds}
+                hideSearch
+              />
+            )}
+            {this.state.lib.ingredientsLoaded && (
+              <ItemSelector
+                name='Ingredients'
+                items={this.state.lib.ingredientLib}
+                onSelectedItemsChange={this.ingredientSelectorChangeHandler}
+                selectedItems={this.state.ingredientIds}
+              />
+            )}
+            {this.state.cocktailIngredients.length !== 0 &&
+              this.state.cocktailIngredients.map((ingObj, idx) => (
+                <PartPicker key={idx} ingObj={ingObj} />
+              ))}
+          </View>
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }

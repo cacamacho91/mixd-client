@@ -5,14 +5,19 @@ import { withNavigation } from 'react-navigation'
 import { commonStyles as common } from '../../../style/common.style'
 import Favorite from './Favorite'
 import Taste from './Taste'
+import CocktailGraphic from './CocktailGraphic'
 
 class CocktailListItem extends React.Component {
   generateCocktailContent = cocktail => (
     <View style={styles.cocktailContent}>
-      <Image
-        source={require('./glass-assets/rock.png')}
-        style={styles.cocktailImage}
-      />
+      <View style={styles.co}>
+        <CocktailGraphic
+          height={40}
+          ingredients={cocktail.cocktail_ingredients}
+          simple
+        />
+      </View>
+
       <View style={styles.cocktailInfo}>
         <Text style={common.heading}>{cocktail.name}</Text>
         <Text style={common.subText}>

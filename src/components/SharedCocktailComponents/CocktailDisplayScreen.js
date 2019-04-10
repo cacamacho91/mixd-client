@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
+import { Tooltip, Icon } from 'react-native-elements'
 import { commonStyles as common } from '../../../style/common.style'
-// Do not use .index within /SharedCocktailComponents to aviod require cycles
 import Favorite from './Favorite'
 import Taste from './Taste'
 import GarnishList from './GarnishList'
@@ -23,21 +23,26 @@ class CocktailDisplayScreen extends React.Component {
           )}
 
           <CocktailGraphic
-            height={300}
+            height={200}
             ingredients={cocktail.cocktail_ingredients}
-            glass='rock'
           />
         </View>
 
         <View style={common.cocktailInfoContainer}>
           <Text style={common.heading}>{cocktail.name}</Text>
+          <Tooltip
+            style={common.regularText}
+            popover={<Text>{cocktail.info}</Text>}
+          >
+            <Icon name='info-outline' type='material-icons' />
+          </Tooltip>
+
           <Text style={common.regularText}>{cocktail.instructions}</Text>
           <View style={common.tasteRow}>
             {cocktail.tastes.map((taste, idx) => (
               <Taste {...taste} key={idx} />
             ))}
           </View>
-          <Text style={common.regularText}>{cocktail.info}</Text>
         </View>
       </View>
     </ScrollView>

@@ -1,12 +1,28 @@
 import React from 'react'
-import { View } from 'react-native'
-import { Input, Icon, Button, Text } from 'react-native-elements'
+import { View, Text } from 'react-native'
+import { Input, Icon, Button } from 'react-native-elements'
 import SignUp from './SignUp'
+import { commonStyles as common } from '../../../style/common.style'
 
 class Login extends React.Component {
   state = {
     username: '',
     password: ''
+  }
+
+  handleSubmit = () => {
+    const user = {
+      username: '@' + this.state.username,
+      password: this.state.password
+    }
+    API.login(user).then(data => {
+      if (data.error) {
+        alert('somthing went wrong')
+      } else {
+        login(data)
+        history.push('/myaccount')
+      }
+    })
   }
 
   render() {
@@ -17,7 +33,7 @@ class Login extends React.Component {
         <Text h3>Log In to MIXD! </Text>
         <Input
           name='username'
-          onChange={() => {}}
+          onChangeText={username => this.setState({ username })}
           value={username}
           placeholder='username...'
           leftIcon={
@@ -30,8 +46,9 @@ class Login extends React.Component {
           }
         />
         <Input
+          secureTextEntry={true}
           name={password}
-          onChange={() => {}}
+          onChangeText={password => this.setState({ password })}
           value={password}
           placeholder='password...'
           leftIcon={

@@ -4,7 +4,7 @@ import { commonStyles as common } from '../../../style/common.style'
 import { INGREDIENT_COLORS } from '../../../style/theme.style'
 
 const CocktailGraphic = props => {
-  const { glass, ingredients } = props
+  const { glass, ingredients, simple } = props
   const height = props.height - 5
 
   buildCocktail = () => {
@@ -32,16 +32,18 @@ const CocktailGraphic = props => {
           }}
         >
           <View style={styles.ingredientTextContainer}>
-            <Text
-              style={{
-                ...common.regularText,
-                color: INGREDIENT_COLORS[ingObj.ingredient.name]
-                  ? INGREDIENT_COLORS[ingObj.ingredient.name].color
-                  : 'black'
-              }}
-            >
-              {`(${ingObj.parts}) ${ingObj.ingredient.name}`}
-            </Text>
+            {!simple && (
+              <Text
+                style={{
+                  ...common.regularText,
+                  color: INGREDIENT_COLORS[ingObj.ingredient.name]
+                    ? INGREDIENT_COLORS[ingObj.ingredient.name].color
+                    : 'black'
+                }}
+              >
+                {`(${ingObj.parts}) ${ingObj.ingredient.name}`}
+              </Text>
+            )}
           </View>
         </View>
       )
@@ -54,7 +56,7 @@ const CocktailGraphic = props => {
   return (
     <View style={{ ...styles.graphicContainer, height: height + 50 }}>
       <View style={styles.ingredientsContainer}>
-        <View style={{ ...styles.glass, height, width: height }}>
+        <View style={{ ...styles.glass, height: height + 5, width: height }}>
           {ingredients &&
             ingredients.length !== 0 &&
             buildCocktail().map(ing => ing)}
@@ -82,8 +84,10 @@ const styles = StyleSheet.create({
   },
   glass: {
     margin: 10,
-    borderColor: 'gray',
-    borderWidth: 0.5,
+    borderColor: 'black',
+    borderBottomWidth: 2.5,
+    borderRightWidth: 2.5,
+    borderLeftWidth: 2.5,
     width: '80%'
   }
 })
