@@ -23,6 +23,16 @@ export default class App extends React.Component {
     }
   }
 
+  logout = () => {
+    try {
+      AsyncStorage.removeItem('token')
+      this.setState({ username: '', id: '' })
+      alert('See you next time!')
+    } catch (e) {
+      alert('error logging out, error:' + e)
+    }
+  }
+
   //Load App Fonts
   async componentDidMount() {
     await Font.loadAsync({
@@ -30,12 +40,22 @@ export default class App extends React.Component {
       'roboto-light': require('./assets/fonts/Roboto-Light.ttf'),
       'roboto-thin': require('./assets/fonts/Roboto-Thin.ttf')
     })
-
     this.setState({ appLoaded: true })
   }
 
   render() {
     const { appLoaded } = this.state
-    return appLoaded ? <AppContainer login={this.login} /> : <AppLoading />
+    return appLoaded ? (
+      <AppContainer
+        screenProps={{
+          username: this.state.username,
+          id: this.state.id,
+          login: this.login,
+          logout: this.logout
+        }}
+      />
+    ) : (
+      <AppLoading />
+    )
   }
 }

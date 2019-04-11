@@ -50,7 +50,8 @@ const ProfileStack = createStackNavigator(
   {
     Profile: ProfileScreen,
     MyCreations: MyCreationsScreen,
-    MyFavourites: MyFavouritesScreen
+    MyFavourites: MyFavouritesScreen,
+    CocktailDisplay: CocktailDisplayScreen
   },
   {
     initialRouteName: 'Profile',

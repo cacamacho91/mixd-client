@@ -1,9 +1,12 @@
 import React from 'react'
 import { Button, Text, View } from 'react-native'
+import { withNavigation } from 'react-navigation'
 
 class ProfilePage extends React.Component {
   static navigationOptions = { title: 'Your Profile' }
   render() {
+    const { logout } = this.props
+
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Welcome!</Text>
@@ -15,9 +18,10 @@ class ProfilePage extends React.Component {
           title='My Favourites'
           onPress={() => this.props.navigation.navigate('MyFavourites')}
         />
+        <Button title='Logout' onPress={logout} />
       </View>
     )
   }
 }
 
-export default ProfilePage
+export default withNavigation(ProfilePage)

@@ -4,7 +4,8 @@ import { COLORS, TASTE_COLORS } from './theme.style'
 const LOADING_PHRASES = [
   'Mixing Drinks...',
   'Slicing Limes...',
-  'Salting Rim...'
+  'Crushing Ice...',
+  'Washing Glasses...'
 ]
 
 const commonStyles = StyleSheet.create({
@@ -41,7 +42,9 @@ const commonStyles = StyleSheet.create({
     width: '90%'
   },
   tasteRow: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap'
   }
 })
 

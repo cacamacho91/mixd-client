@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { Input, Icon, Button } from 'react-native-elements'
-import SignUp from './SignUp'
 import { commonStyles as common } from '../../../style/common.style'
 
 class Login extends React.Component {
@@ -10,27 +9,16 @@ class Login extends React.Component {
     password: ''
   }
 
-  handleSubmit = () => {
-    const user = {
-      username: '@' + this.state.username,
-      password: this.state.password
-    }
-    API.login(user).then(data => {
-      if (data.error) {
-        alert('somthing went wrong')
-      } else {
-        login(data)
-        history.push('/myaccount')
-      }
-    })
-  }
+  loginHeader = () => <Text style={common.heading}>Login to MIXD! </Text>
+  signupHeader = () => <Text style={common.heading}>Join MIXD!</Text>
 
   render() {
     const { username, password } = this.state
+    const { navigate, loginView, handleSubmit } = this.props
 
     return (
       <View>
-        <Text h3>Log In to MIXD! </Text>
+        {loginView ? this.loginHeader() : this.signupHeader()}
         <Input
           name='username'
           onChangeText={username => this.setState({ username })}
@@ -55,9 +43,14 @@ class Login extends React.Component {
             <Icon type='simplelineicons' name='lock' size={24} color='black' />
           }
         />
-        <Button title='Login' />
+        <Button
+          onPress={() => handleSubmit({ username, password })}
+          title={loginView ? 'Login' : 'Signup'}
+        />
+
         <Text>or</Text>
-        <Button title='Sign Up' />
+
+        <Button title={loginView ? 'Signup' : 'Login'} onPress={navigate} />
       </View>
     )
   }

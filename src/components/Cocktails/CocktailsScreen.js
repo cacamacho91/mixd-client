@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { Icon, SearchBar } from 'react-native-elements'
 import API from '../../adapters/API'
 import CocktailList from '../SharedCocktailComponents/CocktailList'
@@ -51,6 +51,7 @@ class CocktailsScreen extends React.Component {
     return (
       <Fragment>
         <View>
+          <Text>{this.props.screenProps.user}</Text>
           <SearchBar
             lightTheme
             platform='android'
