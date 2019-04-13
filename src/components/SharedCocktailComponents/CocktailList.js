@@ -4,9 +4,11 @@ import CocktailListItem from './CocktailListItem'
 
 class CocktailList extends React.PureComponent {
   keyExtractor = (cocktail, idx) => cocktail.id.toString()
+
   render() {
     return (
       <FlatList
+        style={{ backgroundColor: '#080708' }}
         data={this.props.cocktails}
         keyExtractor={this.keyExtractor}
         renderItem={({ item }) => <CocktailListItem cocktail={item} />}

@@ -1,37 +1,40 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { View, Text } from 'react-native'
 import { Icon, SearchBar } from 'react-native-elements'
-import API from '../../adapters/API'
 import CocktailList from '../SharedCocktailComponents/CocktailList'
 import { normalizeString } from '../../lib/helper'
-import Loading from '../../Loading'
-import CocktailListButton from './CocktailListButton'
 
 class CocktailsScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Cocktails',
-    headerRight: (
-      <Icon
-        reverse
-        onPress={() => navigation.navigate('Filter')}
-        name='filter'
-        type='foundation'
-        size={20}
-        color='gray'
-      />
-    )
-  })
-
   state = {
-    allCocktails: [],
     searchTerm: '',
-    loaded: false
+    visible: true
   }
 
-  componentDidMount = () =>
-    API.getAllCocktails().then(allCocktails =>
-      this.setState({ allCocktails, loaded: true })
-    )
+  componentDidMount() {
+    this.props.navigation.setParams({
+      handleVisibiliy: this.toggleSearchVisibility
+    })
+  }
+
+  toggleSearchVisibility = () => this.setState({ visible: !this.state.visible })
+
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state
+    return {
+      title: 'Cocktails',
+      headerRight: (
+        <View style={{ marginRight: 10 }}>
+          <Icon
+            onPress={() => params.handleVisibiliy()}
+            name='search'
+            type='ant-design'
+            size={20}
+            color='#FFFFFA'
+          />
+        </View>
+      )
+    }
+  }
 
   navigateToCocktail = id =>
     this.props.navigation.navigate('CocktailDisplay', {
@@ -39,36 +42,29 @@ class CocktailsScreen extends React.Component {
     })
 
   filteredAndSearchedCocktails = () =>
-    this.state.allCocktails.filter(cocktail =>
+    this.props.screenProps.allCocktails.filter(cocktail =>
       normalizeString(cocktail.name).includes(
         normalizeString(this.state.searchTerm)
       )
     )
 
   render() {
-    const { searchTerm, loaded } = this.state
+    const { searchTerm, visible } = this.state
 
     return (
-      <Fragment>
-        <View>
-          <Text>{this.props.screenProps.user}</Text>
-          <SearchBar
-            lightTheme
-            platform='android'
-            placeholder='Search...'
-            onChangeText={searchTerm => this.setState({ searchTerm })}
-            value={searchTerm}
-          />
-          {loaded ? (
-            <CocktailList
-              handleCocktailSelect={this.navigateToCocktail}
-              cocktails={this.filteredAndSearchedCocktails()}
-            />
-          ) : (
-            <Loading />
-          )}
-        </View>
-      </Fragment>
+      <View>
+        <Text>{this.props.screenProps.user}</Text>
+        <SearchBar
+          visible={visible}
+          placeholder='Search...'
+          onChangeText={searchTerm => this.setState({ searchTerm })}
+          value={searchTerm}
+        />
+        <CocktailList
+          handleCocktailSelect={this.navigateToCocktail}
+          cocktails={this.filteredAndSearchedCocktails()}
+        />
+      </View>
     )
   }
 }

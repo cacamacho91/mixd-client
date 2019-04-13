@@ -13,13 +13,18 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-action-button": "^2.8.5",
     "react-native-card-flip": "^1.0.4",
+    "react-native-dynamic-search-bar": "^0.0.17",
+    "react-native-dynamic-vector-icons": "^0.0.3",
     "react-native-elements": "^1.1.0",
     "react-native-indicators": "^0.13.0",
+    "react-native-iphone-x-helper": "^1.2.0",
     "react-native-numeric-input": "^1.6.5",
+    "react-native-parallax-scrollview": "^3.0.0",
     "react-native-pixel-perfect": "^1.0.2",
     "react-native-sectioned-multi-select": "^0.6.5",
-    "react-native-tab-view": "^2.0.3",
-    "react-navigation": "^3.6.1"
+    "react-native-vector-icons": "^6.4.2",
+    "react-navigation": "^3.6.1",
+    "reactotron-react-native": "^3.2.1"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"

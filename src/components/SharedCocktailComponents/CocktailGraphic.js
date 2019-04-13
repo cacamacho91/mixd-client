@@ -28,6 +28,10 @@ const CocktailGraphic = props => {
             position: 'absolute',
             width: '100%',
             height: ingHeight,
+            borderWidth: 0,
+            borderColor: INGREDIENT_COLORS[ingObj.ingredient.name]
+              ? INGREDIENT_COLORS[ingObj.ingredient.name].backgroundColor
+              : 'gray',
             bottom: idx === 0 ? 0 : yOffset // do not offset first item
           }}
         >
@@ -41,7 +45,7 @@ const CocktailGraphic = props => {
                     : 'black'
                 }}
               >
-                {`(${ingObj.parts}) ${ingObj.ingredient.name}`}
+                {ingObj.ingredient.name}
               </Text>
             )}
           </View>
@@ -84,10 +88,10 @@ const styles = StyleSheet.create({
   },
   glass: {
     margin: 10,
-    borderColor: 'black',
-    borderBottomWidth: 2.5,
-    borderRightWidth: 2.5,
-    borderLeftWidth: 2.5,
+    // borderColor: 'white',
+    // borderBottomWidth: 2.5,
+    // borderRightWidth: 2.5,
+    // borderLeftWidth: 2.5,
     width: '80%'
   }
 })

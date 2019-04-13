@@ -1,6 +1,6 @@
 const VERSION = 'v1'
-//const BASE_URL = `https://mixd-server.herokuapp.com/api/${VERSION}`
-const BASE_URL = `http://localhost:3000/api/${VERSION}`
+const BASE_URL = `https://mixd-server.herokuapp.com/api/${VERSION}`
+//const BASE_URL = `http://localhost:3000/api/${VERSION}`
 import { AsyncStorage } from 'react-native'
 
 const COCKTAIL_URL = BASE_URL + '/cocktails'
@@ -25,7 +25,11 @@ const getMyCreations = () =>
   authorizedFetch(BASE_URL + '/mycreations').then(resp => resp.json())
 
 //================ OPEN API CALLS ================//
-const getAllCocktails = () => fetch(COCKTAIL_URL).then(resp => resp.json())
+const getCocktails = page => {
+  if (!page) return fetch(COCKTAIL_URL).then(resp => resp.json())
+  return fetch(`${COCKTAIL_URL}?page=${page}`).then(resp => resp.json())
+}
+
 const getAllIngredients = () => fetch(INGREDIENT_URL).then(resp => resp.json())
 const getAllGarnishes = () => fetch(GARNISH_URL).then(resp => resp.json())
 const getAllTastes = () => fetch(TASTE_URL).then(resp => resp.json())
@@ -51,7 +55,7 @@ const signUp = userData => {
 }
 
 export default {
-  getAllCocktails,
+  getCocktails,
   getAllIngredients,
   getAllGarnishes,
   getAllTastes,

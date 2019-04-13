@@ -34,6 +34,15 @@ class ProfileScreen extends React.Component {
     })
   }
 
+  getMyStarredCocktails = () => {
+    const { allCocktails, myStarredIds } = this.props.screenProps
+    return allCocktails.filter(cocktail => myStarredIds.includes(cocktail.id))
+  }
+  getMyCreations = () => {
+    const { allCocktails, myCreationIds } = this.props.screenProps
+    return allCocktails.filter(cocktail => myCreationIds.includes(cocktail.id))
+  }
+
   render() {
     const username = this.props.screenProps.username // Check if user logged in already
     const { login } = this.state
@@ -52,7 +61,11 @@ class ProfileScreen extends React.Component {
         />
       )
     ) : (
-      <ProfilePage logout={this.handleLogout} />
+      <ProfilePage
+        myStarredCocktails={this.getMyStarredCocktails()}
+        myCreations={this.getMyCreations()}
+        logout={this.handleLogout}
+      />
     )
   }
 }

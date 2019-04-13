@@ -11,20 +11,32 @@ const LOADING_PHRASES = [
 const commonStyles = StyleSheet.create({
   //==== SHARED FONTS ====//
   heading: {
-    fontFamily: 'monserrat-regular',
-    fontSize: 24
+    fontFamily: 'luxia',
+    color: '#FFFFFA',
+    fontSize: 26
   },
-  subText: {
-    fontFamily: 'roboto-thin',
-    fontSize: 12,
-    color: 'gray'
+  lightText: {
+    fontFamily: 'cocomat-ultralight',
+    fontSize: 14,
+    color: '#F8FFF4'
   },
   regularText: {
-    fontFamily: 'roboto-light',
+    fontFamily: 'cocomat-light',
     fontSize: 14,
-    color: 'black',
-    textAlign: 'center',
-    padding: 8
+    color: '#F8FFF4'
+  },
+  italicText: {
+    fontFamily: 'cocomat-light-italic',
+    fontSize: 14,
+    color: '#F8FFF4'
+  },
+  handwrittenText: {
+    fontFamily: 'belinda',
+    fontSize: 45,
+    color: '#F8FFF4'
+  },
+  numbers: {
+    fontFamily: 'oranienbaum'
   },
   //==== COCKTAIL DISPLAY ====//
   cocktailContainer: {
@@ -43,7 +55,7 @@ const commonStyles = StyleSheet.create({
   },
   tasteRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     flexWrap: 'wrap'
   }
 })

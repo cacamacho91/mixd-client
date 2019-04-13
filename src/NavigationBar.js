@@ -43,10 +43,11 @@ const NavigationBar = createBottomTabNavigator(
     }),
     tabBarOptions: {
       labelStyle: {
-        fontSize: 12,
-        fontFamily: 'roboto-light'
+        fontSize: 14,
+        fontFamily: 'cocomat-light'
       },
-      activeTintColor: COLORS.PRIMARY,
+      style: { backgroundColor: '#FFFFFA' },
+      activeTintColor: '#8EB1C7',
       inactiveTintColor: 'gray'
     }
   }

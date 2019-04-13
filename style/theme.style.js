@@ -8,31 +8,34 @@ const COLORS = {
 
 //Colors for tastes
 const TASTE_COLORS = {
-  Savory: { backgroundColor: '#c36606', color: '#ffffff' },
-  Sweet: { backgroundColor: '#ead1dc', color: '#c27ba0' },
-  Sour: { backgroundColor: '#d9ead3', color: '#38761d' },
-  Bitter: { backgroundColor: '#f9cb9c', color: '#f9cb9c' },
-  Aromatic: { backgroundColor: '#6aa84f', color: '#b6d7a8' },
-  Spicy: { backgroundColor: '#ea9999', color: '#990000' },
-  Smoky: { backgroundColor: '#666666', color: '#efefef' },
-  Strong: { backgroundColor: '#ffe599', color: '#bf9000' },
-  Creamy: { backgroundColor: '#d9d9d9', color: '#ffffff' },
-  Fresh: { backgroundColor: '#cfe2f3', color: '#6fa8dc' },
-  Dry: { backgroundColor: '#73797d', color: '#f2fbff' },
-  Fruity: { backgroundColor: '#a64d79', color: '#ecf8ff' }
+  Savory: '#F6E58D',
+  Sweet: '#c27ba0',
+  Sour: '#38761d',
+  Bitter: '#f9cb9c',
+  Aromatic: '#b6d7a8',
+  Spicy: '#990000',
+  Smoky: '#efefef',
+  Strong: '#bf9000',
+  Creamy: '#cad3c8',
+  Fresh: '#6fa8dc',
+  Dry: '#f2fbff',
+  Fruity: '#ecf8ff'
 }
 
-const LIGHT_TEXT = '#ffffff'
-const DARK_TEXT = '#2d2f30'
+const LIGHT_TEXT = '#FFFFFA'
+const DARK_TEXT = '#F8FFF4'
 
 const BASIC_ING_COLORS = {
-  pale: { backgroundColor: '#E4F3FC', color: DARK_TEXT },
-  yellow: { backgroundColor: '#FFF701', color: DARK_TEXT },
-  peach: { backgroundColor: '#EDAF4F', color: DARK_TEXT },
-  red: { backgroundColor: '#AC0B2C', color: LIGHT_TEXT },
-  orange: { backgroundColor: '#ED4809', color: LIGHT_TEXT },
-  brown: { backgroundColor: '#743D24', color: LIGHT_TEXT },
-  green: { backgroundColor: '#0DB54C', color: LIGHT_TEXT }
+  pale: { backgroundColor: 'rgba(228,243,252,0.8)', color: DARK_TEXT },
+  yellow: { backgroundColor: 'rgba(255,247,1,0.8)', color: DARK_TEXT },
+  peach: { backgroundColor: 'rgba(237,175,79,0.8)', color: DARK_TEXT },
+  red: { backgroundColor: 'rgba(172,11,44,0.8)', color: LIGHT_TEXT },
+  orange: {
+    backgroundColor: 'rgba(237,72,9,0.8)',
+    color: LIGHT_TEXT
+  },
+  brown: { backgroundColor: 'rgba(116,61,36,0.8)', color: LIGHT_TEXT },
+  green: { backgroundColor: 'rgba(13,181,76,0.8)', color: LIGHT_TEXT }
 }
 
 //Highly templated for now but each ingredient can be customised if desired
