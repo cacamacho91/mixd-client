@@ -35,9 +35,6 @@ const commonStyles = StyleSheet.create({
     fontSize: 45,
     color: '#F8FFF4'
   },
-  numbers: {
-    fontFamily: 'oranienbaum'
-  },
   //==== COCKTAIL DISPLAY ====//
   cocktailContainer: {
     flex: 1,

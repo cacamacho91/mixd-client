@@ -53,13 +53,12 @@ class CocktailsScreen extends React.Component {
 
     return (
       <View>
-        <Text>{this.props.screenProps.user}</Text>
-        <SearchBar
+        {/* <SearchBar
           visible={visible}
           placeholder='Search...'
           onChangeText={searchTerm => this.setState({ searchTerm })}
           value={searchTerm}
-        />
+        /> */}
         <CocktailList
           handleCocktailSelect={this.navigateToCocktail}
           cocktails={this.filteredAndSearchedCocktails()}

@@ -8,7 +8,7 @@ class CocktailList extends React.PureComponent {
   render() {
     return (
       <FlatList
-        style={{ backgroundColor: '#080708' }}
+        style={{ backgroundColor: '#231F20' }}
         data={this.props.cocktails}
         keyExtractor={this.keyExtractor}
         renderItem={({ item }) => <CocktailListItem cocktail={item} />}

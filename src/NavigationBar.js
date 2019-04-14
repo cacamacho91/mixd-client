@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icon } from 'react-native-elements'
-import { createBottomTabNavigator } from 'react-navigation'
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
 import {
   ProfileStack,
   CocktailStack,
@@ -8,48 +8,58 @@ import {
 } from './NavigationStacks'
 import { COLORS } from '../style/theme.style'
 
-const NavigationBar = createBottomTabNavigator(
+const NavigationBar = createMaterialBottomTabNavigator(
   {
-    Cocktails: CocktailStack,
-    'Cocktail Creator': CocktailCreatorStack,
-    Profile: ProfileStack
+    Cocktails: {
+      screen: CocktailStack,
+      navigationOptions: {
+        title: 'Cocktails',
+        tabBarLabel: 'Cocktails',
+        tabBarColor: '#231F20',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Icon size={25} name='drink' type='entypo' color={tintColor} />
+        )
+      }
+    },
+    'Cocktail Creator': {
+      screen: CocktailCreatorStack,
+      navigationOptions: {
+        title: 'Cocktial Creator',
+        tabBarLabel: 'Cocktial Creator',
+        tabBarColor: '#8797AF',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Icon
+            name='ios-add-circle'
+            type='ionicon'
+            size={25}
+            color={tintColor}
+          />
+        )
+      }
+    },
+    Profile: {
+      screen: ProfileStack,
+      navigationOptions: {
+        title: 'Profile',
+        tabBarLabel: 'Profile',
+        tabBarColor: '#493657',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Icon
+            name='user-circle'
+            type='font-awesome'
+            size={23}
+            color={tintColor}
+          />
+        )
+      }
+    }
   },
   {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        const { routeName } = navigation.state
-        if (routeName === 'Cocktails') {
-          return <Icon name='drink' type='entypo' size={25} color={tintColor} />
-        } else if (routeName === 'Cocktail Creator') {
-          return (
-            <Icon
-              name='ios-add-circle'
-              type='ionicon'
-              size={25}
-              color={tintColor}
-            />
-          )
-        } else if (routeName === 'Profile') {
-          return (
-            <Icon
-              name='user-circle'
-              type='font-awesome'
-              size={25}
-              color={tintColor}
-            />
-          )
-        }
-      }
-    }),
-    tabBarOptions: {
-      labelStyle: {
-        fontSize: 14,
-        fontFamily: 'cocomat-light'
-      },
-      style: { backgroundColor: '#FFFFFA' },
-      activeTintColor: '#8EB1C7',
-      inactiveTintColor: 'gray'
-    }
+    shifting: true,
+    initialRouteName: 'Cocktails',
+    activeColor: '#FFFFFA',
+    inactiveColor: 'rgba(255,255,255, 0.5)'
   }
 )
+
 export default NavigationBar

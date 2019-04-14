@@ -12,14 +12,16 @@ import FilterScreen from './components/Cocktails/FilterScreen'
 import CocktailCreatorScreen from './components/CocktailCreator/CocktailCreatorScreen'
 import CreatorHelpScreen from './components/CocktailCreator/CreatorHelpScreen'
 import { COLORS } from '../style/theme.style'
+import { commonStyles as common } from '../style/common.style'
 
 const globalDefaultNavigationOptions = {
   headerStyle: {
-    backgroundColor: COLORS.DARK
+    backgroundColor: '#231F20'
   },
-  headerTintColor: '#fff',
+  headerTintColor: '#FFFFFA',
   headerTitleStyle: {
-    fontWeight: 'bold'
+    fontFamily: 'luxia',
+    fontSize: 25
   }
 }
 

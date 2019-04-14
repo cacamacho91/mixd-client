@@ -30,7 +30,7 @@ class CocktailDisplayScreen extends React.Component {
           }}
           windowHeight={SCREEN_HEIGHT - 150}
           navBarTitle={cocktail.name}
-          navBarTitleColor='white'
+          navBarTitleColor='#FFFFFA'
           navBarColor='black'
           headerView={
             <View
@@ -86,6 +86,7 @@ class CocktailDisplayScreen extends React.Component {
 
               <CocktailGraphic
                 height={215}
+                width={180}
                 ingredients={cocktail.cocktail_ingredients}
               />
             </View>
@@ -110,7 +111,7 @@ class CocktailDisplayScreen extends React.Component {
           <ScrollView style={{ flex: 1 }}>
             <View
               style={{
-                backgroundColor: '#080708',
+                backgroundColor: '#231F20',
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'column',
@@ -141,7 +142,7 @@ class CocktailDisplayScreen extends React.Component {
             </View>
             <View
               style={{
-                backgroundColor: '#080708'
+                backgroundColor: '#231F20'
               }}
             >
               <View

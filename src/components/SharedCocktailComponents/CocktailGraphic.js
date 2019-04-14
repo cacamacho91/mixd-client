@@ -6,6 +6,7 @@ import { INGREDIENT_COLORS } from '../../../style/theme.style'
 const CocktailGraphic = props => {
   const { glass, ingredients, simple } = props
   const height = props.height - 5
+  const width = props.width - 5
 
   buildCocktail = () => {
     let totalParts = 0
@@ -58,9 +59,9 @@ const CocktailGraphic = props => {
   }
 
   return (
-    <View style={{ ...styles.graphicContainer, height: height + 50 }}>
-      <View style={styles.ingredientsContainer}>
-        <View style={{ ...styles.glass, height: height + 5, width: height }}>
+    <View style={styles.container}>
+      <View style={{ ...styles.graphicContainer, height, width }}>
+        <View style={{ ...styles.glass, height, width }}>
           {ingredients &&
             ingredients.length !== 0 &&
             buildCocktail().map(ing => ing)}
@@ -71,9 +72,16 @@ const CocktailGraphic = props => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10
+  },
   graphicContainer: {
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%'
   },
   ingredientsContainer: {
@@ -87,7 +95,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   glass: {
-    margin: 10,
     // borderColor: 'white',
     // borderBottomWidth: 2.5,
     // borderRightWidth: 2.5,

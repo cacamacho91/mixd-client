@@ -10,15 +10,16 @@ class CocktailListItem extends React.Component {
     <View style={styles.cocktailListItemCard}>
       <View style={styles.cocktailImage}>
         <CocktailGraphic
-          height={60}
+          height={50}
+          width={50}
           ingredients={cocktail.cocktail_ingredients}
           simple
         />
       </View>
 
       <View style={styles.cocktailInfo}>
-        <Text style={common.heading}>{cocktail.name}</Text>
-        <Text style={common.regularText}>
+        <Text style={{ ...common.heading, fontSize: 20 }}>{cocktail.name}</Text>
+        <Text style={{ ...common.regularText, color: '#788585', fontSize: 12 }}>
           {cocktail.cocktail_ingredients
             .map(ci => ci.ingredient.name)
             .join(', ')}
@@ -27,7 +28,7 @@ class CocktailListItem extends React.Component {
 
       <View style={styles.cocktailStars}>
         <Icon type='font-awesome' name='star' color='#F7DBA7' size={15} />
-        <Text style={{ ...common.number, color: '#F7DBA7', fontSize: 10 }}>
+        <Text style={{ ...common.regularText, color: '#F7DBA7', fontSize: 10 }}>
           10
         </Text>
       </View>
@@ -57,7 +58,8 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 15
   },
   cocktailInfo: {
     width: '60%'
@@ -67,6 +69,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   cocktailImage: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '25%'
   }
 })

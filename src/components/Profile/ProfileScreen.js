@@ -4,7 +4,9 @@ import API from '../../adapters/API'
 import LoginSignUp from './LoginSignUp'
 
 class ProfileScreen extends React.Component {
-  static navigationOptions = { title: 'Your Profile' }
+  static navigationOptions = {
+    header: null
+  }
 
   state = {
     login: true //Show login or Signup Form
