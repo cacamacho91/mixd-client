@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Button, Text } from 'react-native'
 
 class CreatorHelpScreen extends React.Component {
-  static navigationOptions = { title: 'Cocktail Creation Guide' }
+  static navigationOptions = { title: 'Guide' }
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

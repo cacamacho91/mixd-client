@@ -15,7 +15,7 @@ const NavigationBar = createMaterialBottomTabNavigator(
       navigationOptions: {
         title: 'Cocktails',
         tabBarLabel: 'Cocktails',
-        tabBarColor: '#231F20',
+        tabBarColor: COLORS.BLACK,
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon size={25} name='drink' type='entypo' color={tintColor} />
         )
@@ -26,7 +26,7 @@ const NavigationBar = createMaterialBottomTabNavigator(
       navigationOptions: {
         title: 'Cocktial Creator',
         tabBarLabel: 'Cocktial Creator',
-        tabBarColor: '#8797AF',
+        tabBarColor: COLORS.ACCENT3,
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
             name='ios-add-circle'
@@ -42,7 +42,7 @@ const NavigationBar = createMaterialBottomTabNavigator(
       navigationOptions: {
         title: 'Profile',
         tabBarLabel: 'Profile',
-        tabBarColor: '#493657',
+        tabBarColor: COLORS.ACCENT2,
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
             name='user-circle'
@@ -57,7 +57,7 @@ const NavigationBar = createMaterialBottomTabNavigator(
   {
     shifting: true,
     initialRouteName: 'Cocktails',
-    activeColor: '#FFFFFA',
+    activeColor: COLORS.WHITE,
     inactiveColor: 'rgba(255,255,255, 0.5)'
   }
 )

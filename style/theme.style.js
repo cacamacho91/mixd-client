@@ -1,10 +1,28 @@
 //Color Schemes
 const COLORS = {
-  PRIMARY: '#5FBFF9',
-  SECONDARY: '#5863F8',
-  BACKGROUND: '#EFE9F4',
-  DARK: '#171D1C'
+  BLACK: '#231F20',
+  WHITE: '#FFFFFA',
+  GREY: '#788585',
+  YELLOW: '#F7DBA7',
+  ACCENT1: '#96BCC5',
+  ACCENT2: '#8E5572',
+  ACCENT3: '#ED6A5A'
 }
+
+//Theme 3 - Blues
+// ACCENT1: '#98C1D9',
+// ACCENT2: '#3D5A80',
+// ACCENT3: '#F05D5E'
+
+//Theme 2 (with Shit Orange)
+// ACCENT1: '#96BDC6', //DARK-SKY-BLUE
+// ACCENT2: '#FCB97D', //MELLOW-APRICOT
+// ACCENT3: '#8E5572' //SUGAR-PLUM-PURPLE
+
+//Origninal Theme
+// ACCENT1: '#8797AF', //GRAY-BLUE
+// ACCENT2: '#FCB97D', //PEWTER-BLUE
+// ACCENT3: '#8E5572' //FUZZY PINK
 
 //Colors for tastes
 const TASTE_COLORS = {
@@ -26,16 +44,16 @@ const LIGHT_TEXT = '#FFFFFA'
 const DARK_TEXT = '#F8FFF4'
 
 const BASIC_ING_COLORS = {
-  pale: { backgroundColor: 'rgba(228,243,252,0.8)', color: DARK_TEXT },
-  yellow: { backgroundColor: 'rgba(255,247,1,0.8)', color: DARK_TEXT },
-  peach: { backgroundColor: 'rgba(237,175,79,0.8)', color: DARK_TEXT },
-  red: { backgroundColor: 'rgba(172,11,44,0.8)', color: LIGHT_TEXT },
+  pale: { backgroundColor: 'rgba(228,243,252,0.85)', color: DARK_TEXT },
+  yellow: { backgroundColor: 'rgba(255,247,1,0.85)', color: DARK_TEXT },
+  peach: { backgroundColor: 'rgba(237,175,79,0.85)', color: DARK_TEXT },
+  red: { backgroundColor: 'rgba(172,11,44,0.85)', color: LIGHT_TEXT },
   orange: {
-    backgroundColor: 'rgba(237,72,9,0.8)',
+    backgroundColor: 'rgba(237,72,9,0.85)',
     color: LIGHT_TEXT
   },
-  brown: { backgroundColor: 'rgba(116,61,36,0.8)', color: LIGHT_TEXT },
-  green: { backgroundColor: 'rgba(13,181,76,0.8)', color: LIGHT_TEXT }
+  brown: { backgroundColor: 'rgba(116,61,36,0.85)', color: LIGHT_TEXT },
+  green: { backgroundColor: 'rgba(13,181,76,0.85)', color: LIGHT_TEXT }
 }
 
 //Highly templated for now but each ingredient can be customised if desired

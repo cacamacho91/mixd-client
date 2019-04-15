@@ -1,6 +1,7 @@
 import React from 'react'
 import { Icon } from 'react-native-elements'
 import SectionedMultiSelect from 'react-native-sectioned-multi-select'
+import { COLORS } from '../../../style/theme.style'
 
 const ItemSelector = props => {
   const {
@@ -13,6 +14,9 @@ const ItemSelector = props => {
 
   return (
     <SectionedMultiSelect
+      selectToggleIconComponent={
+        <Icon name='edit' type='feather' size={20} color={COLORS.ACCENT3} />
+      }
       items={items}
       searchPlaceholderText={`Search ${name}`}
       readOnlyHeadings={true}
@@ -22,7 +26,7 @@ const ItemSelector = props => {
       showCancelButton
       uniqueKey='id'
       subKey='children'
-      selectText={`Add / Remove ${name}`}
+      selectText={''}
       showChips={false}
       onSelectedItemsChange={onSelectedItemsChange}
       selectedItems={selectedItems}

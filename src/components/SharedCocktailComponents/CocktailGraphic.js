@@ -1,19 +1,17 @@
 import React from 'react'
-import { View, Image, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { commonStyles as common } from '../../../style/common.style'
 import { INGREDIENT_COLORS } from '../../../style/theme.style'
 
 const CocktailGraphic = props => {
-  const { glass, ingredients, simple } = props
+  const { ingredients, simple } = props
   const height = props.height - 5
   const width = props.width - 5
 
   buildCocktail = () => {
     let totalParts = 0
-    ingredients.map(ing => (totalParts += ing.parts)) //use a reducer on this later
-
+    ingredients.map(ing => (totalParts += ing.parts))
     let yOffset = 0
-
     ingViews = []
 
     ingredients.forEach((ingObj, idx) => {
@@ -95,10 +93,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   glass: {
-    // borderColor: 'white',
-    // borderBottomWidth: 2.5,
-    // borderRightWidth: 2.5,
-    // borderLeftWidth: 2.5,
     width: '80%'
   }
 })

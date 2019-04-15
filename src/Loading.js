@@ -8,20 +8,26 @@ import { commonStyles as common } from '../style/common.style'
 
 const Loading = props => (
   <View style={styles.loadingContainer}>
-    <LoadingAnimation color={COLORS.PRIMARY} />
-    <Text style={{ ...common.subText, ...styles.loadingText }}>
-      {getLoadingPhrase()}
-    </Text>
+    <View style={styles.loadingContainer}>
+      <Text
+        style={{
+          ...common.regularText
+        }}
+      >
+        {getLoadingPhrase()}
+      </Text>
+      <LoadingAnimation color={COLORS.ACCENT3} />
+    </View>
   </View>
 )
 
 const styles = StyleSheet.create({
   loadingContainer: {
+    flex: 1,
     flexDirection: 'column',
-    alignItems: 'center'
-  },
-  loadingText: {
-    marginTop: 25
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.BLACK
   }
 })
 

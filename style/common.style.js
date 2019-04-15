@@ -12,48 +12,38 @@ const commonStyles = StyleSheet.create({
   //==== SHARED FONTS ====//
   heading: {
     fontFamily: 'luxia',
-    color: '#FFFFFA',
+    color: COLORS.WHITE,
     fontSize: 26
   },
   lightText: {
     fontFamily: 'cocomat-ultralight',
     fontSize: 14,
-    color: '#F8FFF4'
+    color: COLORS.WHITE
   },
   regularText: {
     fontFamily: 'cocomat-light',
     fontSize: 14,
-    color: '#F8FFF4'
+    color: COLORS.WHITE
   },
   italicText: {
     fontFamily: 'cocomat-light-italic',
     fontSize: 14,
-    color: '#F8FFF4'
+    color: COLORS.WHITE
   },
   handwrittenText: {
     fontFamily: 'belinda',
     fontSize: 45,
-    color: '#F8FFF4'
+    color: COLORS.WHITE
   },
-  //==== COCKTAIL DISPLAY ====//
-  cocktailContainer: {
-    flex: 1,
-    alignItems: 'center'
-  },
-  cocktailGrapahicContainer: {
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center'
-  },
-  cocktailInfoContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '90%'
-  },
-  tasteRow: {
-    flexDirection: 'row',
+  //==== DISPLAY ====//
+  paddedSection: {
     justifyContent: 'center',
-    flexWrap: 'wrap'
+    alignItems: 'center',
+    flexDirection: 'column',
+    paddingTop: 100,
+    paddingBottom: 100,
+    paddingLeft: 15,
+    paddingRight: 15
   }
 })
 

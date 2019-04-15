@@ -7,6 +7,8 @@ const COCKTAIL_URL = BASE_URL + '/cocktails'
 const INGREDIENT_URL = BASE_URL + '/ingredients'
 const GARNISH_URL = BASE_URL + '/garnishes'
 const TASTE_URL = BASE_URL + '/tastes'
+const BASE_LIQUOR_URL = BASE_URL + '/bases'
+const GLASS_URL = BASE_URL + '/glasses'
 
 //================ AUTHORISED API CALLS ================//
 //Used to control access to authorised endpoint for signed up users only
@@ -33,8 +35,8 @@ const getCocktails = page => {
 const getAllIngredients = () => fetch(INGREDIENT_URL).then(resp => resp.json())
 const getAllGarnishes = () => fetch(GARNISH_URL).then(resp => resp.json())
 const getAllTastes = () => fetch(TASTE_URL).then(resp => resp.json())
-const getAllCocktailAttributes = () =>
-  fetch(`${INGREDIENT_URL}/all-attributes`).then(resp => resp.json())
+const getAllBaseLiquors = () => fetch(BASE_LIQUOR_URL).then(resp => resp.json())
+const getAllGlasses = () => fetch(GLASS_URL).then(resp => resp.json())
 
 //================ TOKEN MANAGEMENT ================//
 const login = user => {
@@ -59,7 +61,8 @@ export default {
   getAllIngredients,
   getAllGarnishes,
   getAllTastes,
-  getAllCocktailAttributes,
+  getAllBaseLiquors,
+  getAllGlasses,
   login,
   signUp,
   getMyCreations

@@ -1,17 +1,19 @@
 import React from 'react'
-import { View, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import { Text, Icon } from 'react-native-elements'
 import { withNavigation } from 'react-navigation'
-import { commonStyles as common } from '../../../style/common.style'
 import CocktailGraphic from './CocktailGraphic'
+import Star from './Star'
+import { commonStyles as common } from '../../../style/common.style'
+import { COLORS } from '../../../style/theme.style.js'
 
 class CocktailListItem extends React.Component {
   generateCocktailContent = cocktail => (
     <View style={styles.cocktailListItemCard}>
       <View style={styles.cocktailImage}>
         <CocktailGraphic
-          height={50}
-          width={50}
+          height={40}
+          width={40}
           ingredients={cocktail.cocktail_ingredients}
           simple
         />
@@ -19,7 +21,9 @@ class CocktailListItem extends React.Component {
 
       <View style={styles.cocktailInfo}>
         <Text style={{ ...common.heading, fontSize: 20 }}>{cocktail.name}</Text>
-        <Text style={{ ...common.regularText, color: '#788585', fontSize: 12 }}>
+        <Text
+          style={{ ...common.regularText, color: COLORS.GREY, fontSize: 12 }}
+        >
           {cocktail.cocktail_ingredients
             .map(ci => ci.ingredient.name)
             .join(', ')}
@@ -27,14 +31,13 @@ class CocktailListItem extends React.Component {
       </View>
 
       <View style={styles.cocktailStars}>
-        <Icon type='font-awesome' name='star' color='#F7DBA7' size={15} />
-        <Text style={{ ...common.regularText, color: '#F7DBA7', fontSize: 10 }}>
-          10
-        </Text>
+        <Star mini count={10} active />
       </View>
     </View>
   )
-  cocktailPlaceholder = () => <Text>Loading Cocktail...</Text>
+  cocktailPlaceholder = () => (
+    <Text style={common.regularText}> ...Loading Cocktail... </Text>
+  )
 
   render() {
     const { cocktail } = this.props
@@ -62,7 +65,7 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   cocktailInfo: {
-    width: '60%'
+    width: '65%'
   },
   cocktailStars: {
     width: '15%',
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '25%'
+    width: '20%'
   }
 })
 

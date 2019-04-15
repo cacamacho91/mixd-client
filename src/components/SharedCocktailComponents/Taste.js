@@ -1,29 +1,50 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
-import { getTasteColors } from '../../lib/helper'
+import { View, Text } from 'react-native'
+import { commonStyles as common } from '../../../style/common.style'
 import { TASTE_COLORS } from '../../../style/theme.style'
 
 const Taste = props => {
-  const { name } = props
-  const { color } = TASTE_COLORS[name]
+  const { tastes } = props
 
   return (
-    <View
-      style={{
-        ...styles.tasteLarge
-      }}
-    >
-      <Text style={{ color, textAlign: 'center' }}>{name}</Text>
-    </View>
+    tastes &&
+    tastes.length !== 0 && (
+      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        {tastes.map((taste, idx) => (
+          <View
+            key={idx}
+            style={{
+              alignItems: 'center',
+              flexDirection: 'row',
+              paddingTop: 15
+            }}
+          >
+            <Text
+              style={{
+                ...common.italicText,
+                fontSize: 18,
+                color: TASTE_COLORS[taste.name]
+              }}
+            >
+              {idx < tastes.length - 2 && idx !== tastes.length - 1
+                ? taste.name + ', '
+                : taste.name}
+            </Text>
+            {idx === tastes.length - 2 && (
+              <Text
+                style={{
+                  fontSize: 18,
+                  ...common.italicText
+                }}
+              >
+                {` and `}
+              </Text>
+            )}
+          </View>
+        ))}
+      </View>
+    )
   )
 }
-
-const styles = StyleSheet.create({
-  tasteLarge: {
-    padding: 10,
-    margin: 20,
-    textAlign: 'center'
-  }
-})
 
 export default Taste
