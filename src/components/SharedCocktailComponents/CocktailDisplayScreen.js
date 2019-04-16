@@ -199,8 +199,7 @@ class CocktailDisplayScreen extends React.Component {
   generatePlaceholder = () => <Text> Loading... </Text>
 
   render() {
-    const { navigation } = this.props
-    const cocktail = navigation.getParam('cocktail', {})
+    const cocktail = this.props.navigation.getParam('cocktail', {})
 
     return cocktail
       ? this.generateCocktailContent(cocktail)

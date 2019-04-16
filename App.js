@@ -37,28 +37,38 @@ export default class App extends React.Component {
     try {
       AsyncStorage.removeItem('token')
       this.setState({ username: '', id: '' })
-      alert('See you next time!')
     } catch (e) {
       alert('error logging out, error:' + e)
     }
   }
   //Load Inital state
   async componentDidMount() {
+    //Get all the cocktials
     await API.getCocktails().then(allCocktails => {
       this.setState({
         allCocktails
       })
     })
+    //Load custom fonts
     await Font.loadAsync({
       'cocomat-light-italic': require('./assets/fonts/Cocomat-Light-Italic.ttf'),
       'cocomat-ultralight': require('./assets/fonts/Cocomat-Ultralight.ttf'),
       'cocomat-light': require('./assets/fonts/Cocomat-Light.ttf'),
-      'existence-light': require('./assets/fonts/Existence-Light.ttf'),
-      voga: require('./assets/fonts/Voga-Medium.ttf'),
       luxia: require('./assets/fonts/Luxia-Display.ttf'),
-      lora: require('./assets/fonts/Lora-Regular.ttf'),
-      oranienbaum: require('./assets/fonts/Oranienbaum.ttf'),
       belinda: require('./assets/fonts/Belinda.ttf')
+      //Previous Fonts Below
+      //'existence-light': require('./assets/fonts/Existence-Light.ttf'),
+      //voga: require('./assets/fonts/Voga-Medium.ttf'),
+      //lora: require('./assets/fonts/Lora-Regular.ttf'),
+      //oranienbaum: require('./assets/fonts/Oranienbaum.ttf'),
+    })
+    //Check if user is signed in, if so auto-login
+    await API.validate().then(userData => {
+      if (userData.error) {
+        this.logout()
+      } else {
+        this.login(userData)
+      }
     })
     this.setState({ appInitialLoaded: true })
   }

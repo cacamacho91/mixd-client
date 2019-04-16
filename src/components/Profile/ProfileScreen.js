@@ -38,10 +38,12 @@ class ProfileScreen extends React.Component {
 
   getMyStarredCocktails = () => {
     const { allCocktails, myStarredIds } = this.props.screenProps
+    if (!myStarredIds) return []
     return allCocktails.filter(cocktail => myStarredIds.includes(cocktail.id))
   }
   getMyCreations = () => {
     const { allCocktails, myCreationIds } = this.props.screenProps
+    if (!myCreationIds) return []
     return allCocktails.filter(cocktail => myCreationIds.includes(cocktail.id))
   }
 

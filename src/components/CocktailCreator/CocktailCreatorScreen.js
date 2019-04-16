@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import { Icon, Input } from 'react-native-elements'
+import { Icon, Input, Button } from 'react-native-elements'
 import { commonStyles as common } from '../../../style/common.style'
 import { COLORS } from '../../../style/theme.style'
 import CocktailGraphic from '../SharedCocktailComponents/CocktailGraphic'
@@ -11,31 +11,11 @@ import GarnishList from '../SharedCocktailComponents/GarnishList'
 import Taste from '../SharedCocktailComponents/Taste'
 import { Dropdown } from 'react-native-material-dropdown'
 import Loading from '../../Loading'
-
-let data = [
-  {
-    value: 'Banana'
-  },
-  {
-    value: 'Mango'
-  },
-  {
-    value: 'Pear'
-  }
-]
+import Unauthorised from './Unauthorised'
 
 class CocktailCreatorScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Create A Cocktail',
-    headerRight: (
-      <Icon
-        name='help-outline'
-        color='white'
-        type='material-icons'
-        iconStyle={{ marginRight: 30 }}
-        onPress={() => navigation.navigate('Help')}
-      />
-    )
+    headerTitle: 'Create A Cocktail'
   })
 
   state = {
@@ -47,10 +27,16 @@ class CocktailCreatorScreen extends React.Component {
       glassLib: [],
       fullyLoaded: false
     },
-    garnishIds: [],
     ingredientIds: [],
+    //Below state used to build end cocktail in API
+    garnishIds: [],
     tasteIds: [],
-    cocktailIngredients: [] //used to store the parts
+    cocktailIngredients: [], //used to store the parts
+    name: '',
+    info: '',
+    instructions: '',
+    selectedGlassId: undefined,
+    selectedBaseId: undefined
   }
 
   getAndSetGarnishes = () =>
@@ -115,6 +101,38 @@ class CocktailCreatorScreen extends React.Component {
       this.getAndSetBaseLiquors()
     ])
     this.setState({ fullyLoaded: true })
+  }
+
+  transformCocktailIngredients = () =>
+    this.state.cocktailIngredients.map(ci => ({
+      parts: ci.parts,
+      ingredient_id: ci.ingredient.id
+    }))
+
+  handleCocktailCreate = () => {
+    const {
+      name,
+      instructions,
+      info,
+      selectedGlassId,
+      selectedBaseId,
+      garnishIds,
+      tasteIds
+    } = this.state
+
+    const cocktail = {
+      cocktail: {
+        name,
+        instructions,
+        info,
+        glass_id: selectedGlassId,
+        base_id: selectedBaseId
+      },
+      garnish_ids: garnishIds,
+      taste_ids: tasteIds,
+      cocktail_ingredients: this.transformCocktailIngredients()
+    }
+    API.createCocktail(cocktail)
   }
 
   garnishSelectorChangeHandler = garnishIds => {
@@ -193,6 +211,7 @@ class CocktailCreatorScreen extends React.Component {
       <View
         style={{
           ...common.paddedSection,
+          paddingBottom: 10,
           paddingTop: 10,
           backgroundColor: COLORS.BLACK
         }}
@@ -211,7 +230,7 @@ class CocktailCreatorScreen extends React.Component {
           1.1 - Select Ingredients
         </Text>
         <Text style={{ ...common.regularText, color: COLORS.GREY }}>
-          Include all Alcahol & Mixers needed
+          Include all Alcohol & Mixers needed
         </Text>
 
         <ItemSelector
@@ -236,8 +255,7 @@ class CocktailCreatorScreen extends React.Component {
               color: COLORS.ACCENT3
             }}
           >
-            Pick some ingredients to get started (Tap the pencil under the 'Make
-            With' section above).
+            Pick some ingredients to get started...
           </Text>
         ) : (
           <Fragment>
@@ -260,7 +278,17 @@ class CocktailCreatorScreen extends React.Component {
           </Fragment>
         )}
 
+        <Text style={{ ...common.regularText, fontSize: 20 }}>
+          1.2 - Select Base Liquor
+        </Text>
+        <Text style={{ ...common.regularText, color: COLORS.GREY }}>
+          Used to help people find your cocktail
+        </Text>
+
         <Dropdown
+          onChangeText={(value, index, data) => {
+            this.setState({ selectedBaseId: this.state.lib.baseLib[index].id })
+          }}
           containerStyle={{ width: '80%' }}
           baseColor={COLORS.ACCENT3}
           itemColor={COLORS.WHITE}
@@ -269,12 +297,13 @@ class CocktailCreatorScreen extends React.Component {
           itemTextStyle={{ ...common.regularText }}
           pickerStyle={{ backgroundColor: COLORS.BLACK }}
           itemTextStyle={common.regularText}
-          label='1.2 Pick Base Liquor'
-          data={data}
+          label=''
+          valueExtractor={({ name }) => name}
+          data={this.state.lib.baseLib}
         />
 
         <Text style={{ ...common.regularText, fontSize: 20 }}>
-          Select your Garnishes
+          1.3 Select your Garnishes
         </Text>
         <Text style={{ ...common.regularText, color: COLORS.GREY }}>
           (optional)
@@ -292,7 +321,7 @@ class CocktailCreatorScreen extends React.Component {
         )}
 
         <Text style={{ ...common.heading, textAlign: 'center' }}>
-          3 ~ Describe your creation
+          2 ~ Describe your creation
         </Text>
         <Text
           style={{
@@ -301,8 +330,15 @@ class CocktailCreatorScreen extends React.Component {
             color: COLORS.GREY
           }}
         >
-          Pick the tastes, write the instructions and add any extra info on how
-          your creation came to be, and of course... give it a name.
+          Share your cocktails story...
+        </Text>
+
+        <Text style={{ ...common.regularText, fontSize: 20 }}>
+          2.1 - Define Taste Profile
+        </Text>
+        <Text style={{ ...common.regularText, color: COLORS.GREY }}>
+          Describe your cocktails taste. (used to help others find your
+          cocktail)
         </Text>
 
         <ItemSelector
@@ -313,28 +349,81 @@ class CocktailCreatorScreen extends React.Component {
           hideSearch
         />
 
-        <Text style={common.regularText}>Taste Profile: </Text>
         {this.state.tasteIds.length !== 0 && (
           <Taste tastes={this.getTasteObjects()} />
         )}
 
+        <Text style={{ ...common.regularText, fontSize: 20 }}>
+          2.2 - Finishing Touches
+        </Text>
+
         <Text style={common.regularText}>Cocktail Name: </Text>
-        <Input style={styles.input} />
+        <Input
+          onChangeText={name => this.setState({ name })}
+          value={this.state.name}
+          style={styles.input}
+        />
 
         <Text style={common.regularText}>How to Make: </Text>
-        <Input style={styles.input} />
+        <Input
+          onChangeText={instructions => this.setState({ instructions })}
+          value={this.state.instructions}
+          style={styles.input}
+        />
 
-        <Text style={common.regularText}>Best Served in: </Text>
+        <Text style={common.regularText}>Pick a Glass to Serve In: </Text>
+        <Dropdown
+          onChangeText={(value, index, data) => {
+            this.setState({
+              selectedGlassId: this.state.lib.glassLib[index].id
+            })
+          }}
+          valueExtractor={item => item.name}
+          containerStyle={{ width: '80%' }}
+          baseColor={COLORS.ACCENT3}
+          itemColor={COLORS.WHITE}
+          selectedItemColor={COLORS.ACCENT3}
+          textColor={COLORS.WHITE}
+          itemTextStyle={{ ...common.regularText }}
+          pickerStyle={{ backgroundColor: COLORS.BLACK }}
+          itemTextStyle={common.regularText}
+          label=''
+          data={this.state.lib.glassLib}
+        />
 
         <Text style={common.regularText}>Origin Story / Extra Info: </Text>
-        <Input style={styles.input} />
+        <Input
+          onChangeText={info => this.setState({ info })}
+          value={this.state.info}
+          style={styles.input}
+        />
+
+        <Button
+          buttonStyle={{
+            width: '90%',
+            marginTop: 15,
+            backgroundColor: COLORS.ACCENT3,
+            borderRadius: 10
+          }}
+          onPress={this.handleCocktailCreate}
+          titleStyle={common.regularText}
+          title='Create Cocktail'
+        />
       </View>
     </ScrollView>
   )
 
   render() {
     const { fullyLoaded } = this.state
-    return fullyLoaded ? this.buildCocktailCreator() : <Loading />
+    const username = this.props.screenProps.username
+
+    if (username === '') return <Unauthorised />
+
+    return fullyLoaded ? (
+      this.buildCocktailCreator()
+    ) : (
+      <Loading color={COLORS.ACCENT3} />
+    )
   }
 }
 

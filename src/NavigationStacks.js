@@ -10,9 +10,6 @@ import CocktailsScreen from './components/Cocktails/CocktailsScreen'
 import FilterScreen from './components/Cocktails/FilterScreen'
 //Cocktail Creator Screens
 import CocktailCreatorScreen from './components/CocktailCreator/CocktailCreatorScreen'
-import CreatorHelpScreen from './components/CocktailCreator/CreatorHelpScreen'
-import { COLORS } from '../style/theme.style'
-import { commonStyles as common } from '../style/common.style'
 
 const globalDefaultNavigationOptions = {
   headerStyle: {
@@ -40,7 +37,7 @@ const CocktailStack = createStackNavigator(
 const CocktailCreatorStack = createStackNavigator(
   {
     CocktailCreator: CocktailCreatorScreen,
-    Help: CreatorHelpScreen
+    CocktailDisplay: CocktailDisplayScreen
   },
   {
     initialRouteName: 'CocktailCreator',

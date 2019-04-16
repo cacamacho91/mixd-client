@@ -23,8 +23,18 @@ const authorizedFetch = async (url, options = {}) => {
   })
 }
 
+const validate = () =>
+  authorizedFetch(BASE_URL + '/validate').then(resp => resp.json())
+
 const getMyCreations = () =>
   authorizedFetch(BASE_URL + '/mycreations').then(resp => resp.json())
+
+const createCocktail = cocktailData =>
+  fetch(COCKTAIL_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(cocktailData)
+  }).then(resp => resp.json)
 
 //================ OPEN API CALLS ================//
 const getCocktails = page => {
@@ -65,5 +75,7 @@ export default {
   getAllGlasses,
   login,
   signUp,
-  getMyCreations
+  validate,
+  getMyCreations,
+  createCocktail
 }

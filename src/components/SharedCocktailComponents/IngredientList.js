@@ -24,6 +24,17 @@ const IngredientList = props => {
             paddingTop: 10
           }}
         >
+          {editable && (
+            <View style={{ marginRight: 10 }}>
+              <Icon
+                color={COLORS.WHITE}
+                name='minuscircle'
+                type='antdesign'
+                size={25}
+                onPress={() => handlePartDecrement(ingObj.ingredient.id)}
+              />
+            </View>
+          )}
           <View
             style={{
               height: 12,
@@ -38,22 +49,15 @@ const IngredientList = props => {
             ingObj.parts === 1 ? 'part ' : 'parts'
           } ${ingObj.ingredient.name}`}</Text>
           {editable && (
-            <Fragment>
-              <Icon
-                color={COLORS.WHITE}
-                name='minuscircle'
-                type='antdesign'
-                size={15}
-                onPress={() => handlePartDecrement(ingObj.ingredient.id)}
-              />
+            <View style={{ marginLeft: 10 }}>
               <Icon
                 color={COLORS.WHITE}
                 name='pluscircle'
                 type='antdesign'
-                size={15}
+                size={25}
                 onPress={() => handlePartIncrement(ingObj.ingredient.id)}
               />
-            </Fragment>
+            </View>
           )}
         </View>
       ))}

@@ -16,7 +16,7 @@ const Loading = props => (
       >
         {getLoadingPhrase()}
       </Text>
-      <LoadingAnimation color={COLORS.ACCENT3} />
+      <LoadingAnimation color={props.color} />
     </View>
   </View>
 )

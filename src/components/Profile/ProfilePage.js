@@ -14,11 +14,19 @@ class ProfilePage extends React.Component {
         <Text>Welcome!</Text>
         <Button
           title='My Creations'
-          onPress={() => this.props.navigation.navigate('MyCreations')}
+          onPress={() =>
+            this.props.navigation.navigate('MyCreations', {
+              myCreations: this.props.myCreations
+            })
+          }
         />
         <Button
-          title='My Favourites'
-          onPress={() => this.props.navigation.navigate('MyFavourites')}
+          title='My Starred Cocktails'
+          onPress={() =>
+            this.props.navigation.navigate('MyFavourites', {
+              myStarred: this.props.myStarredCocktails
+            })
+          }
         />
         <Button title='Logout' onPress={logout} />
       </View>
