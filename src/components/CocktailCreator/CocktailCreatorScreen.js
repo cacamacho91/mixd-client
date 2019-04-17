@@ -488,7 +488,7 @@ class CocktailCreatorScreen extends React.Component {
             borderRadius: 10
           }}
           onPress={this.handleCocktailCreate}
-          titleStyle={{ ...common.regularText, textAlign: 'center' }}
+          titleStyle={{ ...common.regularText }}
           title='Create Cocktail'
         />
       </View>
