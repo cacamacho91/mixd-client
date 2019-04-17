@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import { View, Text, ScrollView, Image, Dimensions } from 'react-native'
+import { Icon } from 'react-native-elements'
 import { commonStyles as common } from '../../../style/common.style'
+import { NavigationActions } from 'react-navigation'
 import Star from '../SharedCocktailComponents/Star'
 import IngredientList from './IngredientList'
 import GarnishList from './GarnishList'
@@ -12,17 +14,25 @@ import {
   TASTE_COLORS,
   INGREDIENT_COLORS
 } from '../../../style/theme.style'
+import API from '../../adapters/API'
 
 class CocktailDisplayScreen extends React.Component {
   static navigationOptions = {
     header: null
   }
 
+  handleStarPress = cocktailId => {
+    API.starCocktail(cocktailId).then(() =>
+      this.props.screenProps.handleStarChange(cocktailId)
+    )
+  }
+
   generateCocktailHeader = cocktail => (
     <View
       style={{
         width: '100%',
-        height: 400
+        flexDirection: 'column',
+        justifyContent: 'flex-start'
       }}
     >
       <Text
@@ -42,6 +52,20 @@ class CocktailDisplayScreen extends React.Component {
         width={180}
         ingredients={cocktail.cocktail_ingredients}
       />
+      <View
+        style={{
+          marginTop: 75,
+          flexDirection: 'column',
+          justifyContent: 'flex-end'
+        }}
+      >
+        <Text style={{ ...common.regularText, textAlign: 'center' }}>
+          scroll down for more information{' '}
+        </Text>
+        <Icon name='down' type='antdesign' size={15} color={COLORS.WHITE} />
+      </View>
+
+      <View style={{ marginBottom: 100 }} />
     </View>
   )
 
@@ -161,9 +185,10 @@ class CocktailDisplayScreen extends React.Component {
     SCREEN_HEIGHT = Dimensions.get('window').height
     return (
       <Fragment>
+        <View style={{ backgroundColor: 'black', height: 20 }} />
         <ParallaxScrollView
           backgroundSource={{ uri: cocktail.base.img_url }}
-          windowHeight={SCREEN_HEIGHT - 150}
+          windowHeight={SCREEN_HEIGHT * 1}
           navBarTitle={cocktail.name}
           navBarTitleColor={COLORS.WHITE}
           navBarColor='black'
@@ -174,18 +199,29 @@ class CocktailDisplayScreen extends React.Component {
             size: 30,
             type: 'antdesign'
           }}
-          leftIconOnPress={() => this.props.navigation.navigate('Cocktails')}
-          rightIcon={{
-            name: 'star-o',
-            color: COLORS.YELLOW,
-            size: 30,
-            type: 'font-awesome'
-          }}
-          rightIconOnPress={() =>
-            this.setState({ index: (this.state.index + 1) % 3 })
+          leftIconOnPress={() =>
+            this.props.navigation.dispatch(NavigationActions.back())
           }
+          //only show option to star if logged in user
+          rightIcon={
+            this.props.screenProps.username !== ''
+              ? {
+                  name: this.props.screenProps.myStarredIds.includes(
+                    cocktail.id
+                  )
+                    ? 'star'
+                    : 'star-o',
+                  color: COLORS.ACCENT3,
+                  size: 30,
+                  type: 'font-awesome'
+                }
+              : null
+          }
+          rightIconOnPress={() => this.handleStarPress(cocktail.id)}
         >
-          <ScrollView style={{ flex: 1 }}>
+          <ScrollView
+            style={{ flex: 1, backgroundColor: 'rgba(228, 117, 125, 1)' }}
+          >
             {this.generateCocktailInstructions(cocktail)}
             {this.generateCocktailIngredients(cocktail)}
             {this.generateCocktailInfo(cocktail)}

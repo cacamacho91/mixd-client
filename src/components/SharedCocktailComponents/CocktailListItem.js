@@ -31,7 +31,12 @@ class CocktailListItem extends React.Component {
       </View>
 
       <View style={styles.cocktailStars}>
-        <Star mini count={10} active />
+        <Star
+          mini
+          count={cocktail.star_count + cocktail.name.length}
+          showCount
+          active
+        />
       </View>
     </View>
   )

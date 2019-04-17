@@ -3,9 +3,10 @@ import { Text, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { COLORS } from '../../../style/theme.style'
 import { commonStyles as common } from '../../../style/common.style'
+import CocktailList from '../SharedCocktailComponents/CocktailList'
 
 class MyFavouritesScreen extends React.Component {
-  static navigationOptions = { title: 'Your Favourites' }
+  static navigationOptions = { title: 'Your Starred' }
 
   emptyState = () => (
     <View

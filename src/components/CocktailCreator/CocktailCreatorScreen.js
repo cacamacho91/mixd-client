@@ -13,12 +13,26 @@ import { Dropdown } from 'react-native-material-dropdown'
 import Loading from '../../Loading'
 import Unauthorised from './Unauthorised'
 
+const initialState = {
+  ingredientIds: [],
+  //Below state used to build end cocktail in API
+  garnishIds: [],
+  tasteIds: [],
+  cocktailIngredients: [], //used to store the parts
+  name: '',
+  info: '',
+  instructions: '',
+  selectedGlassId: undefined,
+  selectedBaseId: undefined
+}
+
 class CocktailCreatorScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: 'Create A Cocktail'
   })
 
   state = {
+    ...initialState,
     lib: {
       garnishLib: [],
       baseLib: [],
@@ -26,17 +40,7 @@ class CocktailCreatorScreen extends React.Component {
       tasteLib: [],
       glassLib: [],
       fullyLoaded: false
-    },
-    ingredientIds: [],
-    //Below state used to build end cocktail in API
-    garnishIds: [],
-    tasteIds: [],
-    cocktailIngredients: [], //used to store the parts
-    name: '',
-    info: '',
-    instructions: '',
-    selectedGlassId: undefined,
-    selectedBaseId: undefined
+    }
   }
 
   getAndSetGarnishes = () =>
@@ -92,6 +96,54 @@ class CocktailCreatorScreen extends React.Component {
       })
     )
 
+  frontEndValidation = () => {
+    const {
+      name,
+      instructions,
+      info,
+      selectedGlassId,
+      selectedBaseId,
+      tasteIds,
+      cocktailIngredients
+    } = this.state
+
+    if (name.length < 3 || name.length > 50) {
+      alert('Give your cocktail a name (between 3 and 50 characters)')
+      return false
+    }
+    if (instructions.length < 5 || instructions.length > 500) {
+      alert(
+        'Give your cocktail instructions to make (between 5 and 500 characters)'
+      )
+      return false
+    }
+    if (info.length < 5 || info.length > 300) {
+      alert(
+        'Give your cocktail an origin story or some trivia (between 5 and 300 characters)'
+      )
+      return false
+    }
+    if (selectedGlassId === undefined) {
+      alert('Select a glass to serve your cocktail in')
+      return false
+    }
+    if (selectedBaseId === undefined) {
+      alert('Select a catagory for your cocktail')
+      return false
+    }
+    if (tasteIds.length === 0) {
+      alert('Pick at least one taste to describe your cocktail')
+      return false
+    }
+    if (cocktailIngredients.length === 0) {
+      alert(
+        'Pick at least one ingredient for your cocktail (ideally more than one!)'
+      )
+      return false
+    }
+    return true
+  }
+
   componentDidMount = async () => {
     await Promise.all([
       this.getAndSetGarnishes(),
@@ -120,19 +172,31 @@ class CocktailCreatorScreen extends React.Component {
       tasteIds
     } = this.state
 
-    const cocktail = {
-      cocktail: {
-        name,
-        instructions,
-        info,
-        glass_id: selectedGlassId,
-        base_id: selectedBaseId
-      },
-      garnish_ids: garnishIds,
-      taste_ids: tasteIds,
-      cocktail_ingredients: this.transformCocktailIngredients()
+    if (this.frontEndValidation()) {
+      const cocktail = {
+        cocktail: {
+          name,
+          instructions,
+          info,
+          glass_id: selectedGlassId,
+          base_id: selectedBaseId
+        },
+        garnish_ids: garnishIds,
+        taste_ids: tasteIds,
+        cocktail_ingredients: this.transformCocktailIngredients()
+      }
+      API.createCocktail(cocktail).then(newCocktail => {
+        if (newCocktail.error) {
+          alert(
+            'somenthing went wrong, check your cocktail details and try again'
+          )
+        } else {
+          this.props.screenProps.addCocktailToAll(newCocktail)
+          this.setState({ ...this.state, ...initialState })
+          alert('cocktail created')
+        }
+      })
     }
-    API.createCocktail(cocktail)
   }
 
   garnishSelectorChangeHandler = garnishIds => {
@@ -216,15 +280,26 @@ class CocktailCreatorScreen extends React.Component {
           backgroundColor: COLORS.BLACK
         }}
       >
-        <Text
-          style={{
-            ...common.heading,
-            color: COLORS.WHITE,
-            textAlign: 'center'
-          }}
-        >
-          1 ~ Build
-        </Text>
+        <View style={{ marginBottom: 15 }}>
+          <Text
+            style={{
+              ...common.heading,
+              color: COLORS.WHITE,
+              textAlign: 'center'
+            }}
+          >
+            1 ~ Build
+          </Text>
+          <Text
+            style={{
+              ...common.regularText,
+              textAlign: 'center',
+              color: COLORS.GREY
+            }}
+          >
+            Create your cocktail...
+          </Text>
+        </View>
 
         <Text style={{ ...common.regularText, fontSize: 20 }}>
           1.1 - Select Ingredients
@@ -279,7 +354,7 @@ class CocktailCreatorScreen extends React.Component {
         )}
 
         <Text style={{ ...common.regularText, fontSize: 20 }}>
-          1.2 - Select Base Liquor
+          1.2 - Select Cocktail Category
         </Text>
         <Text style={{ ...common.regularText, color: COLORS.GREY }}>
           Used to help people find your cocktail
@@ -319,24 +394,31 @@ class CocktailCreatorScreen extends React.Component {
         {this.state.garnishIds.length !== 0 && (
           <GarnishList garnishes={this.getGarnishObjects()} />
         )}
-
-        <Text style={{ ...common.heading, textAlign: 'center' }}>
-          2 ~ Describe your creation
-        </Text>
-        <Text
-          style={{
-            ...common.regularText,
-            textAlign: 'center',
-            color: COLORS.GREY
-          }}
-        >
-          Share your cocktails story...
-        </Text>
+        <View style={{ marginBottom: 10 }}>
+          <Text style={{ ...common.heading, textAlign: 'center' }}>
+            2 ~ Describe your creation
+          </Text>
+          <Text
+            style={{
+              ...common.regularText,
+              textAlign: 'center',
+              color: COLORS.GREY
+            }}
+          >
+            Share your cocktails story...
+          </Text>
+        </View>
 
         <Text style={{ ...common.regularText, fontSize: 20 }}>
           2.1 - Define Taste Profile
         </Text>
-        <Text style={{ ...common.regularText, color: COLORS.GREY }}>
+        <Text
+          style={{
+            ...common.regularText,
+            color: COLORS.GREY,
+            textAlign: 'center'
+          }}
+        >
           Describe your cocktails taste. (used to help others find your
           cocktail)
         </Text>
@@ -361,14 +443,14 @@ class CocktailCreatorScreen extends React.Component {
         <Input
           onChangeText={name => this.setState({ name })}
           value={this.state.name}
-          style={styles.input}
+          inputStyle={{ ...common.regularText }}
         />
 
         <Text style={common.regularText}>How to Make: </Text>
         <Input
           onChangeText={instructions => this.setState({ instructions })}
           value={this.state.instructions}
-          style={styles.input}
+          inputStyle={{ ...common.regularText }}
         />
 
         <Text style={common.regularText}>Pick a Glass to Serve In: </Text>
@@ -395,7 +477,7 @@ class CocktailCreatorScreen extends React.Component {
         <Input
           onChangeText={info => this.setState({ info })}
           value={this.state.info}
-          style={styles.input}
+          inputStyle={{ ...common.regularText }}
         />
 
         <Button
@@ -406,7 +488,7 @@ class CocktailCreatorScreen extends React.Component {
             borderRadius: 10
           }}
           onPress={this.handleCocktailCreate}
-          titleStyle={common.regularText}
+          titleStyle={{ ...common.regularText, textAlign: 'center' }}
           title='Create Cocktail'
         />
       </View>

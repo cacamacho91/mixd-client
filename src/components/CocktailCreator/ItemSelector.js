@@ -18,6 +18,18 @@ const ItemSelector = props => {
         <Icon name='edit' type='feather' size={20} color={COLORS.ACCENT3} />
       }
       items={items}
+      colors={{
+        success: COLORS.ACCENT3,
+        primary: COLORS.ACCENT3,
+        text: COLORS.WHITE,
+        itemBackground: COLORS.BLACK,
+        subItemBackground: COLORS.BLACK,
+        subText: COLORS.WHITE
+      }}
+      styles={{
+        container: { backgroundColor: COLORS.BLACK },
+        listContainer: { backgroundColor: COLORS.BLACK }
+      }}
       searchPlaceholderText={`Search ${name}`}
       readOnlyHeadings={true}
       showDropDowns={false}

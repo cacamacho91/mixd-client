@@ -21,47 +21,43 @@ class CocktailsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
     return {
-      title: 'Cocktails',
-      headerRight: (
-        <View style={{ marginRight: 10 }}>
-          <Icon
-            onPress={() => params.handleVisibiliy()}
-            name='search'
-            type='ant-design'
-            size={20}
-            color='#FFFFFA'
-          />
-        </View>
-      )
+      title: 'Cocktails'
+      // headerRight: (
+      //   <View style={{ marginRight: 10 }}>
+      //     <Icon
+      //       onPress={() => params.handleVisibiliy()}
+      //       name='search'
+      //       type='ant-design'
+      //       size={20}
+      //       color='#FFFFFA'
+      //     />
+      //   </View>
+      // )
     }
   }
 
   navigateToCocktail = id =>
     this.props.navigation.navigate('CocktailDisplay', {
-      cocktail: this.state.allCocktails.find(cocktail => cocktail.id === id)
+      cocktail: this.props.screenProps.allCocktails.find(
+        cocktail => cocktail.id === id
+      )
     })
 
-  filteredAndSearchedCocktails = () =>
-    this.props.screenProps.allCocktails.filter(cocktail =>
-      normalizeString(cocktail.name).includes(
-        normalizeString(this.state.searchTerm)
-      )
-    )
+  // filteredAndSearchedCocktails = () =>
+  //   this.props.screenProps.allCocktails.filter(cocktail =>
+  //     normalizeString(cocktail.name).includes(
+  //       normalizeString(this.state.searchTerm)
+  //     )
+  //   )
 
   render() {
     const { searchTerm, visible } = this.state
 
     return (
       <View>
-        {/* <SearchBar
-          visible={visible}
-          placeholder='Search...'
-          onChangeText={searchTerm => this.setState({ searchTerm })}
-          value={searchTerm}
-        /> */}
         <CocktailList
           handleCocktailSelect={this.navigateToCocktail}
-          cocktails={this.filteredAndSearchedCocktails()}
+          cocktails={this.props.screenProps.allCocktails}
         />
       </View>
     )
